@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Création Client</title>
+<link href="css/styles.css" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+</head>
+<body>
+
+	<div th:insert="fragments/NavBar :: div.navigateur"></div>
+
+
+
+	<div id="layoutSidenav">
+		<div th:replace="fragments/NavBar :: div.HEllo"></div>
+		<div id="layoutSidenav_content">
+			<main>
+			<div class="container-fluid">
+				<h1 class="mt-4">Creation d'un client</h1>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item"><a href="/">Acceuil</a></li>
+					<li class="breadcrumb-item">Gestion Client</li>
+					<li class="breadcrumb-item active"><a
+						th:href="@{/CreationClient}">Création Client</a></li>
+				</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				<div class="container">
+					<form method="POST" th:action="@{/CreationClientV}"
+						th:object="${client}">
+
+						<div class="row">
+							<div class="col-md-6">
+								<!------------------------- informations personnel -------------------->
+								<div class="card">
+									<div class="card-body">
+										<legend>les informations personnel</legend>
+										<div class="form-group">
+											<label for="nomClient">Nom :</label> <input
+												class="form-control" th:field="*{nom}" type="text" size="30" />
+											<span class="erreur" th:errors="*{nom}"></span>
+										</div>
+
+										<div class="form-group">
+											<label for="prenomClient">Prénom :</label> <input
+												class="form-control" th:field="*{prenom}" type="text"
+												size="30" maxlength="50" /> <small class="text-danger"
+												th:errors="*{prenom}"></small>
+										</div>
+
+										<div class="form-group">
+											<label for="dateNaissanceClient">Date de Naissance :</label>
+											<input class="form-control" th:field="*{dateNaissance}"
+												type="text" size="30" maxlength="50" /> <small
+												class="text-danger" th:errors="*{dateNaissance}"></small>
+										</div>
+
+										<div class="form-group">
+											<label for="telephoneClient">Téléphone :</label> <input
+												class="form-control" th:field="*{telephone}" type="text"
+												size="30" maxlength="50" /> <span class="text-danger"
+												th:errors="*{telephone}"></span>
+										</div>
+
+										<div class="form-group">
+											<label for="emailClient">Email :</label> <input
+												class="form-control" th:field="*{email}" type="text"
+												size="30" maxlength="50" /> <small class="text-danger"
+												th:errors="*{email}"></small> <small id="emailHelp"
+												class="form-text text-muted">We'll never share your
+												email with anyone else.</small>
+
+										</div>
+
+										<div class="form-group">
+											<label for="agencelClient">Numéro d'agence :</label> <input
+												class="form-control" th:field="*{idAgence}" type="number"
+												size="30" maxlength="50" />
+										</div>
+									</div>
+								</div>
+								<!--------------------------End informations personnel -------------------->
+							</div>
+							<div class="col-md-6">
+								<!----------------------------- informations compte ----------------------->
+								<div class="card">
+									<div class="card-body">
+										<legend>Creation du compte utilisateur</legend>
+										<div class="form-group">
+											<label for="LoginClient">Login :</label> <input
+												class="form-control" th:field="*{userCompte.username}"
+												type="text" size="40" /> <small class="text-danger"
+												th:text="${#httpServletRequest.getParameter('error')}"></small>
+										</div>
+										<div class="form-group">
+											<label for="passwordClient">Password :</label> <input
+												class="form-control" th:field="*{userCompte.password}"
+												type="text" size="40" />
+										</div>
+									</div>
+								</div>
+								<!---------------------------- End informations compte -------------------->
+							</div>
+						</div>
+						<div style="height: 5vh;"></div>
+						<div class="row">
+							<div class="col-md-2"></div>
+							<div class="col-md-8">
+								<input type="button" data-toggle="modal"
+									data-target="#exampleModalCenter"
+									class="btn btn-primary btn-lg btn-block" value="valider" />
+							</div>
+							<div class="col-md-2"></div>
+						</div>
+						<input th:field="*{idClient}" type="hidden" />
+
+
+
+
+						<!------------------------------------------ Start Modal ----------------------------------------------->
+
+						<div class="modal fade" id="exampleModalCenter" tabindex="-1"
+							role="dialog" aria-labelledby="exampleModalCenterTitle"
+							aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title text-center" id="exampleModalLongTitle">Message
+											Confirmation</h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">Vous etes au point de créer une
+										demande, c'est un acte irréversible et vous ne pouvez pas
+										revenir en arriére une fois effectuer. Etes-vous d'y aller
+										d'avant.</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">Annuler</button>
+										<button type="submit" class="btn btn-primary">Valider</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!------------------------------------------ End Modal ----------------------------------------------->
+
+
+					</form>
+				</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				<div style="height: 100vh;"></div>
+				<div class="card mb-4">
+					<div class="card-body">When scrolling, the navigation stays
+						at the top of the page. This is the end of the static navigation
+						demo.</div>
+				</div>
+			</div>
+			</main>
+
+
+			<div th:replace="fragments/NavBar :: footer"></div>
+		</div>
+	</div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+</html>

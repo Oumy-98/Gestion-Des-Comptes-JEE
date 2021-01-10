@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Virement d'argent</title>
+<link href="client/css/styles.css" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+</head>
+<body>
+
+	<div th:insert="client/fragments/NavBar :: div.navigateur"></div>
+
+
+
+	<div id="layoutSidenav">
+		<div th:replace="client/fragments/NavBar :: div.HEllo"></div>
+		<div id="layoutSidenav_content">
+			<main>
+			<div class="container-fluid">
+				<h1 class="mt-4">Opération de virement</h1>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item"><a th:href="@{/MesComptes}">Mes
+							Demandes</a></li>
+					<li class="breadcrumb-item active"><a th:href="@{/virement}"></a>Virement</li>
+				</ol>
+				
+				<!----------------------------------- ROW 3 : Start of the add -------------------------------->
+				<div class="row"
+					th:if="*{#lists.size(session.sessionUserInfos.lesComptesBancaire) == 0}">
+					<div style="height: 7vh;"></div>
+					<div class="col-md-2"></div>
+					<div class="col-md-8">
+						<div class="card text-center shadow bg-white rounded">
+							<div class="card-body">
+								<h5 class="card-title text-dark">Vous n'avez pas de compte</h5>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2"></div>
+				</div>
+				<!----------------------------------- ROW 3 : End of the add ---------------------------------->
+				
+
+				<!----------------------------------- ROW 3 : Start of the Message -------------------------------->
+				<div class="row"
+					th:if="${ #request.getParameter('success') == '0' or #request.getParameter('success') == '1'}">
+					<!-- 				  -->
+					<div class="col-md-2"></div>
+					<div class="col-md-8">
+						<div class="alert alert-dismissible fade show"
+							th:classappend="${ #request.getParameter('success') == '0' } ? alert-danger : alert-success"
+							role="alert">
+							<strong th:text="${#request.getParameter('msg')}"></Strong> <span
+								th:text="${#request.getParameter('error')}"></span>
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					</div>
+					<div class="col-md-2"></div>
+				</div>
+				<!----------------------------------- ROW 3: End of of the Message ------------------------------->
+				
+				
+
+
+
+
+				<div style="height: 5vh;"></div>
+
+
+
+
+
+
+
+				<div class="row">
+					<!-- Start of the add -->
+					<div class="col-md-6 col-lg-6">
+						<div class="card mb-4 shadow bg-white rounded" th:if="*{#lists.size(session.sessionUserInfos.lesComptesBancaire) != 0 }">
+							<div class="card-body">
+								<!-------------- Search bar Start--------------- -->
+								<form th:href="@{/EffectuerVirement}" method="GET">
+									<div>Numéro du Compte débiteur :</div>
+									<div class="input-group">
+										<input class="form-control" type="number" name="idCompte" />
+										<div class="input-group-append">
+											<button class="btn btn-primary" type="submit">
+												<i class="fas fa-search">Chercher</i>
+											</button>
+										</div>
+									</div>
+									<div th:if="${exception}" th:text="${exception.message}"
+										class="text-danger"></div>
+								</form>
+
+								<!-------------- Search bar End--------------- -->
+
+
+
+								<div style="height: 5vh;"></div>
+
+
+
+
+								<!------------------ start account table  ----------------------->
+								<div class="account-table" th:if="${ compte.idCompte != 0 }">
+									<div>
+										<strong> <u>Le compte</u> :
+										</strong>
+										<div class="d-flex align-items-end flex-column">
+											<div class="p-2">
+												<a th:href="@{/CreationCompte(idCompte=${compte.idCompte})}"><i
+													class="fas fa-edit"></i></a>
+											</div>
+										</div>
+									</div>
+									<div class="table-responsive">
+										<table class="table table-bordered table-hover" width="100%">
+											<thead>
+												<tr class="bg-success">
+													<th>N° Compte</th>
+													<th>Date de création</th>
+													<th>libelle</th>
+													<th>solde</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td th:text="${ compte.idCompte }">Avatar</td>
+													<td th:text="${ compte.dateCreation }">7.8</td>
+													<td th:text="${#strings.toUpperCase(compte.libelle) }">Peter
+														recommended</td>
+													<td th:text="${ compte.solde }">LOW</td>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+
+									<!--------------------- End account table -------------------------->
+									<!-------------------- Start  of Histo and Depot -------------------------->
+
+									<!------------------ start history table  ----------------------->
+									<div class="lesOperations-depot"
+										th:if="*{#lists.size(compte.lesOperations)}">
+										<div>
+											<strong> <u>Détails</u> :
+											</strong>
+										</div>
+										<div class="table-responsive">
+											<table class="table table-bordered table-hover" width="100%">
+												<thead>
+													<tr class="bg-success">
+														<th>N° Opération</th>
+														<th>Date d'opération</th>
+														<th>libelle</th>
+														<th>Debit</th>
+														<th>Credit</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr
+														th:each="operation : ${#lists.sort(compte.lesOperations)}">
+														<td th:text="${ operation.idOperation }">Avatar</td>
+														<td th:text="${ operation.dateOperation }">7.8</td>
+														<td th:text="${#strings.toUpperCase(operation.libelle) }">Peter
+															recommended</td>
+														<td th:text="${ operation.debit }">LOW</td>
+														<td th:text="${ operation.credit }">Avatar</td>
+													</tr>
+
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<!--------------------- End history table -------------------------->
+								</div>
+
+								<!-------------------- End of Histo and Depot -------------------------->
+
+							</div>
+						</div>
+
+
+
+					</div>
+
+
+
+					<div class="col-md-6 col-lg-6">
+						<!---------------------Start client informations ---------------------------->
+						<div class="compte-informtions" th:if="${ compte.idCompte != 0 }">
+
+
+							<form method="POST" th:action="@{/ValiderVirement}">
+								<div class="card mb-4 shadow bg-white rounded">
+									<div class="card-body">
+
+
+										<!---------------------- Client id ------------------->
+										<div class="form-group">
+
+											<div class="col-sm-10">
+												<input type="hidden" class="form-control" name="idCompte"
+													th:value="${compte.idCompte}">
+											</div>
+										</div>
+										<!---------------------- End Client id ------------------->
+										<div class="row form-group">
+											<label class="col-4">Compte Destinataire </label> <label
+												class="col"> : </label>
+											<div class="col-7">
+												<input type="number" class="form-control"
+													name="idCompteDestinataire" value="">
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-4">Le Montant </label> <label class="col">
+												: </label>
+											<div class="col-7">
+												<input type="number" class="form-control" name="montant"
+													value="">
+
+											</div>
+										</div>
+										<button type="button"
+											class="btn btn-secondary btn-lg btn-block"
+											data-toggle="modal" data-target="#exampleModalCenter">Valider</button>
+
+
+										<!------------------------------------------ Start Modal ----------------------------------------------->
+
+										<div class="modal fade" id="exampleModalCenter" tabindex="-1"
+											role="dialog" aria-labelledby="exampleModalCenterTitle"
+											aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered"
+												role="document">
+												<div class="modal-content">
+													<div class="modal-header text-center">
+														<h5 class="modal-title" id="exampleModalLongTitle">Message
+															Confirmation</h5>
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">Vous etes au point de créer
+														une demande, c'est un acte irréversible et vous ne pouvez
+														pas revenir en arriére une fois effectuer. Etes-vous d'y
+														aller d'avant.</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary"
+															data-dismiss="modal">Annuler</button>
+														<button type="submit" class="btn btn-primary">Valider</button>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<!------------------------------------------ End Modal ----------------------------------------------->
+
+									</div>
+								</div>
+							</form>
+
+						</div>
+						<!---------------------------End client informations ---------------------------->
+					</div>
+				</div>
+
+
+
+
+				<div style="height: 100vh;"></div>
+				<div class="card mb-4">
+					<div class="card-body">When scrolling, the navigation stays
+						at the top of the page. This is the end of the static navigation
+						demo.</div>
+				</div>
+			</div>
+			</main>
+
+
+			<div th:replace="fragments/NavBar :: footer"></div>
+		</div>
+	</div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+</html>

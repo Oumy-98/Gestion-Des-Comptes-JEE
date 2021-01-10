@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Chercher Compte</title>
+<link href="css/styles.css" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<div th:insert="fragments/NavBar :: div.navigateur"></div>
+	<div id="layoutSidenav">
+		<div th:replace="fragments/NavBar :: div.HEllo"></div>
+		<div id="layoutSidenav_content">
+			<main class="TheMain">
+			<div class="container-fluid">
+				<h1 class="mt-4">Acceuil</h1>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item"><a href="/">Acceuil</a></li>
+					<li class="breadcrumb-item">Gestion Compte</li>
+					<li class="breadcrumb-item active"><a
+						th:href="@{/ChercherCompte}">Chercher un Compte</a></li>
+				</ol>
+
+
+
+				<div class="row">
+					<!-- Start of the add -->
+					<div class="col-md-6 col-lg-6">
+						<div class="card mb-4 shadow bg-white rounded">
+							<div class="card-body">
+								<!-------------- Search bar Start--------------- -->
+								<form th:href="@{/ChercherCompte}" method="GET">
+									<div>Numéro du Compte :</div>
+									<div class="input-group">
+										<input class="form-control" type="number" name="idCompte" />
+										<div class="input-group-append">
+											<button class="btn btn-primary" type="submit">
+												<i class="fas fa-search">Chercher</i>
+											</button>
+										</div>
+									</div>
+									<div th:if="${exception}" th:text="${exception.message}"
+										class="text-danger"></div>
+								</form>
+
+								<!-------------- Search bar End--------------- -->
+
+
+
+								<div style="height: 5vh;"></div>
+
+
+
+
+								<!------------------ start account table  ----------------------->
+								<div class="account-table" th:if="${ compte.idCompte != 0 }">
+									<div>
+										<strong> <u>Le compte</u> : </strong>
+										<div class="d-flex align-items-end flex-column">
+											<div class="p-2">
+												<a th:href="@{/CreationCompte(idCompte=${compte.idCompte})}"><i
+													class="fas fa-edit"></i></a>
+											</div>
+										</div>
+									</div>
+									<div class="table-responsive">
+										<table class="table table-bordered table-hover" width="100%">
+											<thead>
+												<tr class="bg-success">
+													<th>N° Compte</th>
+													<th>Date de création</th>
+													<th>libelle</th>
+													<th>solde</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td th:text="${ compte.idCompte }">Avatar</td>
+													<td th:text="${ compte.dateCreation }">7.8</td>
+													<td th:text="${#strings.toUpperCase(compte.libelle) }">Peter
+														recommended</td>
+													<td th:text="${ compte.solde }">LOW</td>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!--------------------- End account table -------------------------->
+								<!-------------------- Start  of Histo and Depot -------------------------->
+
+								<!------------------ start history table  ----------------------->
+								<div class="lesOperations-depot"
+									th:if="*{#lists.size(operations)}">
+									<div>
+										<strong> <u>Détails</u> : </strong>
+									</div>
+									<div class="table-responsive">
+										<table class="table table-bordered table-hover" width="100%">
+											<thead>
+												<tr class="bg-success">
+													<th>N° Opération</th>
+													<th>Date d'opération</th>
+													<th>libelle</th>
+													<th>Debit</th>
+													<th>Credit</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="operation : ${#lists.sort(operations)}">
+													<td th:text="${ operation.idOperation }">Avatar</td>
+													<td th:text="${ operation.dateOperation }">7.8</td>
+													<td th:text="${#strings.toUpperCase(operation.libelle) }">Peter
+														recommended</td>
+													<td th:text="${ operation.debit }">LOW</td>
+													<td th:text="${ operation.credit }">Avatar</td>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<!--------------------- End history table -------------------------->
+
+
+
+								<!------------------ Start of the depot ----------------------->
+								<div th:if="${ compte.idCompte != 0 }">
+									<a th:href="@{/UnDepot(idCompte=${compte.idCompte})}"
+										role="button" class="btn btn-lg btn-primary"> Effectuer un
+										depot</a>
+								</div>
+								<!-------------------- End of the depot -------------------------->
+
+								<!-------------------- End of Histo and Depot -------------------------->
+
+							</div>
+						</div>
+
+
+
+					</div>
+
+
+
+					<div class="col-md-6 col-lg-6">
+						<!---------------------Start client informations ---------------------------->
+						<div class="client-informtions" th:if="${ compte.idCompte != 0 }">
+							<div class="card mb-4 shadow bg-white rounded">
+								<div class="card-body">
+									<fieldset>
+										<legend>Informations du client :</legend>
+										<strong>Nom :</strong>
+										<p th:text="${ compte.client.nom }"></p>
+										<strong>Prenom :</strong>
+										<p th:text="${ compte.client.prenom }"></p>
+										<strong>date Naissance :</strong>
+										<p th:text="${ compte.client.dateNaissance }"></p>
+										<strong>Email :</strong>
+										<p th:text="${ compte.client.email }"></p>
+										<strong>Telephone :</strong>
+										<p th:text="${ compte.client.telephone }"></p>
+										<strong>le nombre des comptes bancaire :</strong>
+										<p th:text="${#lists.size(compte.client.lesComptesBancaire) }" />
+										<strong>le nombre des demandes :</strong>
+										<p th:text="*{#lists.size(compte.client.lesDemndes) }" />
+										<strong>le nombre des credits :</strong>
+										<p th:text="${#lists.size(compte.client.lesCredit) }" />
+									</fieldset>
+
+									<div class="d-flex align-items-end flex-column">
+										<div class="mt-auto p-2">
+											<a
+												th:href="@{/ChercherClient(idClient=${compte.client.idClient})}">Détails</a>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<!---------------------------End client informations ---------------------------->
+					</div>
+				</div>
+
+
+
+
+
+				<div style="height: 50vh;"></div>
+			</div>
+			</main>
+
+
+			<div th:replace="fragments/NavBar :: footer"></div>
+		</div>
+	</div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+</html>

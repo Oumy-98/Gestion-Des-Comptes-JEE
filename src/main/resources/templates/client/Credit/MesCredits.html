@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Mes Credits</title>
+<link href="client/css/styles.css" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+</head>
+<body>
+
+	<div th:insert="client/fragments/NavBar :: div.navigateur"></div>
+
+
+
+	<div id="layoutSidenav">
+		<div th:replace="client/fragments/NavBar :: div.HEllo"></div>
+		<div id="layoutSidenav_content">
+			<main>
+			<div class="container-fluid">
+				<h1 class="mt-4">Mes Credits</h1>
+				<h6>
+					Total des credits : <span
+						th:text="*{#lists.size(client.lesCredit)}"></span>
+				</h6>
+				<div style="height: 2vh;"></div>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item"><a href="/">Acceuil</a></li>
+					<li class="breadcrumb-item active"><a th:href="@{/MesCredits}">Mes
+							Credits</a></li>
+				</ol>
+
+
+
+				<!----------------------------------- ROW 3 : Start of the add -------------------------------->
+				<div class="row" th:if="*{#lists.size(client.lesCredit) == 0}">
+					<div style="height: 7vh;"></div>
+					<div class="col-md-2"></div>
+					<div class="col-md-8">
+						<div class="card text-center shadow bg-white rounded">
+							<div class="card-body">
+								<h5 class="card-title text-dark">Vous n'avez pas de Credit</h5>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2"></div>
+				</div>
+				<!----------------------------------- ROW 3 : End of the add ---------------------------------->
+
+				<div style="height: 4vh;"></div>
+
+				<div class="row">
+					<div class="col-md-2 col-lg-2"></div>
+					<div class="col-md-8 col-lg-8">
+						<!------------------ start credit table  ----------------------->
+						<div class="account-table"
+							th:if="*{#lists.size(client.lesCredit) != 0}">
+
+							<div class="table-responsive">
+								<table class="table table-bordered table-hover" width="100%">
+									<thead>
+										<tr class="bg-success">
+											<th>N° Crédits</th>
+											<th>Date d'accord</th>
+											<th>Montant octroyé</th>
+											<th>Montant Restant</th>
+											<th>Détails</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each=" credit : ${client.lesCredit}" th:class="${ credit.montantRestant == 0 } ? table-success ">
+											<td th:text="${ credit.idCredit }">1</td>
+											<td th:text="${ credit.dateCredit }">2018 aout 09</td>
+											<td th:text="${ credit.montantDonne }">1200</td>
+											<td th:text="${ credit.montantRestant }">500</td>
+											<td><a
+												th:href="@{/CreditDetails(idCredit=${ credit.idCredit })}">Détails</a></td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<!--------------------- End credit table -------------------------->
+					</div>
+					<div class="col-md-2 col-lg-2"></div>
+				</div>
+			</div>
+			</main>
+			<div th:replace="client/fragments/NavBar :: footer"></div>
+		</div>
+	</div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+
+</html>

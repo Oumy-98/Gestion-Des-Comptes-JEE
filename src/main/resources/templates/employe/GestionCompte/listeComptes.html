@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Liste des Comptes</title>
+<link href="css/styles.css" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+</head>
+<body>
+
+	<div th:insert="fragments/NavBar :: div.navigateur"></div>
+
+
+
+	<div id="layoutSidenav">
+		<div th:replace="fragments/NavBar :: div.HEllo"></div>
+		<div id="layoutSidenav_content">
+			<main>
+			<div class="container-fluid">
+				<h1 class="mt-4">Acceuil</h1>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item"><a th:href="@{/}">Acceuil</a></li>
+					<li class="breadcrumb-item">Gestion Comptes</li>
+					<li class="breadcrumb-item"><a th:href="@{/listeComptes}">liste
+							des Comptes</a></li>
+				</ol>
+				<div class="card-header">
+					Total des comptes : <span th:text="*{#lists.size(comptes)}"></span>
+				</div>
+				<div class="card-body shadow bg-white rounded">
+					<table class="table table-bordered table-hover">
+						<caption>
+							<span th:text="*{#lists.size(comptes)}"></span>
+						</caption>
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col">Numéro du Compte</th>
+								<th scope="col">Date de creation</th>
+								<th scope="col">solde</th>
+								<th scope="col">libelle</th>
+								<th scope="col">Numero Client</th>
+								<th scope="col">Nom</th>
+								<th scope="col">Prenom</th>
+								<th scope="col">Opérations</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="compte : ${comptes}" scope="row">
+								<td th:text="${ compte.idCompte }">Avatar</td>
+								<td th:text="${ compte.dateCreation }">7.8</td>
+								<td th:text="${ compte.solde }">LOW</td>
+								<td th:text="${ compte.libelle }">Peter recommended</td>
+								<td th:text="${ compte.client.idClient }">Avatar</td>
+								<td th:text="${ compte.client.nom }">7.8</td>
+								<td th:text="${ compte.client.prenom }">LOW</td>
+								<td><a href="#" class="badge badge-secondary"
+									th:href="@{/lesOperations(idCompte=${compte.idCompte})}">Détails</a></td>
+<!-- 								<td><a class="badge badge-secondary" -->
+<!-- 									th:href="@{/CreationCompte(idCompte=${compte.idCompte})}">Update</a></td> -->
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<main>
+			<div th:replace="fragments/NavBar :: footer"></div>
+		</div>
+	</div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+</html>

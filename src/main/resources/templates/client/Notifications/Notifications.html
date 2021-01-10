@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Mes Notifications</title>
+<link href="client/css/styles.css" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+</head>
+<body>
+
+	<div th:insert="client/fragments/NavBar :: div.navigateur"></div>
+	<div id="layoutSidenav">
+		<div th:replace="client/fragments/NavBar :: div.HEllo"></div>
+
+		<div id="layoutSidenav_content">
+
+			<main>
+			<div class="container-fluid">
+				<h1 class="mt-4">Acceuil</h1>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item"><a href="/">Acceuil</a></li>
+				</ol>
+
+
+				<div class="row">
+
+					<div class="col-md-6 col-lg-6">
+						<h4>Les Notifications :</h4>
+						<h6>
+							vous avez <span th:text="${#lists.size(notifications)}"></span>
+							notifications
+						</h6>
+					</div>
+					<div class="col-md-6 col-lg-6"></div>
+
+				</div>
+				<div th:each="notification : ${notifications}">
+					<div class="row">
+						<div class="alert alert-secondary alert-dismissible fade show"
+							style="width: 60%;" role="alert">
+
+							<p class="text-left">
+								Notification : <a
+									th:href="@{/DemandeDetails(idDemande=${ notification.demande.id_demande })}">La
+									demande N° : <span
+									th:text="${ notification.demande.id_demande }"></span>
+								</a> a enregistré une évolution le <span
+									th:text="${ notification.dateNotifcations }"> </span>
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<!-- 											<a class="text-right" href="/"><i class="far fa-trash-alt"></i></a> -->
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</p>
+
+						</div>
+					</div>
+				</div>
+
+
+				<div style="height: 50vh;"></div>
+
+
+
+			</div>
+			</main>
+
+
+
+			<div th:replace="client/fragments/NavBar :: footer"></div>
+		</div>
+	</div>
+
+
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+
+</html>
+

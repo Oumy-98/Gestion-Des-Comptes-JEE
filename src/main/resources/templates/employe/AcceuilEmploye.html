@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Acceuil Employe</title>
+<link href="css/styles.css" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+</head>
+
+<body>
+
+	<div th:insert="fragments/NavBar :: div.navigateur"></div>
+
+
+
+	<div id="layoutSidenav">
+		<div th:replace="fragments/NavBar :: div.HEllo"></div>
+		<div id="layoutSidenav_content">
+			<div class="container">
+				<div style="height: 20vh;"></div>
+				<div class="row">
+					<div class="col-md-2 col-lg-2"></div>
+					<div class="col-md-8 col-lg-8">
+						<div class="card text-center shadow bg-white rounded">
+							<div class="card-body">
+
+								<h1 class="font-italic text-center">Acceuil Employe</h1>
+
+								<p class="text-center">
+									Bienvenue <strong> <span
+										th:text="${ #strings.toUpperCase(session.sessionUserInfos.nom) + ' ' + #strings.toUpperCase(session.sessionUserInfos.prenom) }"></span></strong>
+								</p>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 col-lg-2"></div>
+				</div>
+			</div>
+			<div style="height: 20vh;"></div>
+			<div th:replace="fragments/NavBar :: footer"></div>
+		</div>
+	</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+	crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>
+</html>

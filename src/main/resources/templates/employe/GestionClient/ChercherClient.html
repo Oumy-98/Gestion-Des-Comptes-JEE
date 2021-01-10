@@ -1,0 +1,262 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Chercher Client</title>
+<link href="css/styles.css" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"
+	crossorigin="anonymous"></script>
+</head>
+<body>
+	<div th:insert="fragments/NavBar :: div.navigateur"></div>
+	<div id="layoutSidenav">
+		<div th:replace="fragments/NavBar :: div.HEllo"></div>
+		<div id="layoutSidenav_content">
+			<main class="TheMain">
+
+
+
+
+
+
+			<div class="container-fluid">
+				<h1 class="mt-4">Acceuil</h1>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item"><a href="/">Acceuil</a></li>
+					<li class="breadcrumb-item">Gestion Client</li>
+					<li class="breadcrumb-item active"><a
+						th:href="@{/ChercherClient}">Client Informations</a></li>
+				</ol>
+				<!----------------------------------- ROW 3 : Start of the add -------------------------------->
+				<div class="row">
+					<div class="col-md-2"></div>
+					<div class="col-md-8">
+						<div class="card text-center shadow bg-white rounded">
+							<div class="card-body">
+								<form method="GET" th:href="@{/ChercherClient}">
+									<div>Numéro du Client :</div>
+									<div class="input-group">
+										<input class="form-control" type="number" name="idClient" />
+										<div class="input-group-append">
+											<button class="btn btn-primary" type="submit">
+												<i class="fas fa-search">Chercher</i>
+											</button>
+										</div>
+									</div>
+									<small th:if="${exception}" th:text="${exception.message}"
+										class="text-danger"></small>
+								</form>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2"></div>
+				</div>
+				<!----------------------------------- ROW 3 : End of the add ---------------------------------->
+				<div style="height: 3vh;"></div>
+
+
+				<div class="row">
+
+					<div class="col-md-6 col-lg-6">
+						<!---------------------Start client informations ---------------------------->
+						<div class="client-informtions" th:if="${ client.idClient != 0 }">
+
+							<div class="card mb-4 shadow bg-white rounded">
+								<div class="card-body">
+
+									<div class="d-flex align-items-end flex-column">
+										<div class="p-2"><a th:href="@{/CreationClient(idClient=${client.idClient})}"><i class="fas fa-edit"></i></a></div>
+									</div>
+									<fieldset>
+										<strong>Nom :</strong>
+										<p th:text="${ client.nom }"></p>
+										<strong>Prenom :</strong>
+										<p th:text="${ client.prenom }"></p>
+										<strong>Date de naissance :</strong>
+										<p th:text="${ client.dateNaissance }"></p>
+										<strong>Telephone :</strong>
+										<p th:text="${ client.telephone }"></p>
+										<strong>Email :</strong>
+										<p th:text="${ client.email }"></p>
+										<strong>le nombre des comptes bancaire :</strong>
+										<p th:text="${#lists.size(client.lesComptesBancaire) }" />
+										<strong>le nombre des demandes :</strong>
+										<p th:text="*{#lists.size(client.lesDemndes) }" />
+										<strong>le nombre des credits :</strong>
+										<p th:text="${#lists.size(client.lesCredit) }" />
+									</fieldset>
+
+
+								</div>
+							</div>
+
+							<!---------------------------End client informations ---------------------------->
+							<!---------------------------Start Modifier Client ---------------------------->
+							<div class="row">
+								<div class="col-md-6">
+
+									<a href="#" class="btn btn-lg btn-primary" role="button"
+										th:href="@{/CreationClient(idClient=${client.idClient})}">Modifier</a>
+
+								</div>
+								<div class="col-md-6"></div>
+							</div>
+							<!---------------------------End Modifier Client ---------------------------->
+						</div>
+					</div>
+
+
+					<!-- Start of the add -->
+					<div class="col-md-6 col-lg-6">
+
+						<div class="ClientInfosV-table" th:if="${ client.idClient != 0  }">
+
+							<div class="card mb-4 shadow bg-white rounded">
+								<div class="card-body">
+
+									<!------------------ start account table  ----------------------->
+									<div class="account-table"
+										th:if="*{#lists.size(client.lesComptesBancaire) != 0}">
+										<div>
+											<strong> <u>Compte</u> : </strong>
+										</div>
+										<div class="table-responsive">
+											<table class="table table-bordered table-hover" width="100%">
+												<thead>
+													<tr class="bg-success">
+														<th>N° Compte</th>
+														<th>Date de création</th>
+														<th>libelle</th>
+														<th>solde</th>
+														<th>Détails</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each=" compte : ${client.lesComptesBancaire}">
+														<td th:text="${ compte.idCompte }">Avatar</td>
+														<td th:text="${ compte.dateCreation }">7.8</td>
+														<td th:text="${#strings.toUpperCase(compte.libelle) }">Peter
+															recommended</td>
+														<td th:text="${ compte.solde }">LOW</td>
+														<td><a
+															th:href="@{/ChercherCompte(idCompte=${ compte.idCompte })}">Détails</a></td>
+
+													</tr>
+
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<!--------------------- End account table -------------------------->
+
+									<!------------------ start credit table  ----------------------->
+									<div class="account-table"
+										th:if="*{#lists.size(client.lesCredit) != 0}">
+
+										<div>
+											<strong> <u>Crédit Accordé</u> : </strong>
+										</div>
+										<div class="table-responsive">
+											<table class="table table-bordered table-hover" width="100%">
+												<thead>
+													<tr class="bg-success">
+														<th>N° Crédits</th>
+														<th>Date d'accord</th>
+														<th>Montant octroyé</th>
+														<th>Montant Restant</th>
+														<th>Détails</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each=" credit : ${client.lesCredit}">
+														<td th:text="${ credit.idCredit }">1</td>
+														<td th:text="${ credit.dateCredit }">2018 aout 09</td>
+														<td th:text="${ credit.montantDonne }">1200</td>
+														<td th:text="${ credit.montantRestant }">500</td>
+														<td><a
+															th:href="@{/ChercherCredit(idCredit=${ credit.idCredit })}">Détails</a></td>
+													</tr>
+
+												</tbody>
+											</table>
+										</div>
+									</div>
+
+									<!--------------------- End credit table -------------------------->
+
+
+
+
+
+									<!------------------ start demandes table  ----------------------->
+									<div class="account-table"
+										th:if="*{#lists.size(client.lesDemndes) != 0}">
+										<div>
+											<strong> <u>Demande de Crédit</u> : </strong>
+										</div>
+										<div class="table-responsive">
+											<table class="table table-bordered table-hover" width="100%">
+												<thead>
+													<tr class="bg-success">
+														<th>N° Demande</th>
+														<th>Date Demande</th>
+														<th>Montant Demande</th>
+														<th>Etat demande</th>
+														<th>Détails</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each=" demande : ${client.lesDemndes}">
+														<td th:text="${ demande.id_demande }">1</td>
+														<td th:text="${ demande.dateDemande }">2018 aout 09</td>
+														<td th:text="${ demande.montantDemande }">1200</td>
+														<td th:switch="${demande.etatDemande}"><span
+															th:case="'1'">Etape 1 : Demande en ligne toujours</span><span
+															th:case="'2'">Etape 2 : Convoquer pour un
+																entretien</span><span th:case="'3'">Etape 3 : en cours
+																d'étude</span> <span th:case="'10'">Etape 4 : demande
+																accepté</span> <span th:case="'-1'">Etape 4 : demande
+																refusé</span></td>
+														<td><a
+															th:href="@{/chercherDemande(idDemande=${ demande.id_demande })}">Détails</a></td>
+													</tr>
+
+												</tbody>
+											</table>
+										</div>
+									</div>
+
+									<!--------------------- End demandes table -------------------------->
+
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+
+				</div>
+
+
+				<div style="height: 50vh;"></div>
+			</div>
+
+
+			</main>
+			<div th:replace="fragments/NavBar :: footer"></div>
+		</div>
+	</div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+</html>

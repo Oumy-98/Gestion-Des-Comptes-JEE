@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Static Navigation - SB Admin</title>
+<link href="css/styles.css" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+</head>
+
+<body>
+
+	<div th:insert="fragments/NavBar :: div.navigateur"></div>
+
+
+
+	<div id="layoutSidenav">
+		<div th:replace="fragments/NavBar :: div.HEllo"></div>
+		<div id="layoutSidenav_content">
+			<div class="container">
+
+				<h1>Bienvenue Employe</h1>
+
+				<p>Bienvenue</p>
+				<ul>
+					<li>Gérer Les client
+						<ul>
+							<li><a href="/listeClients">Les Clients de la banque</a></li>
+							<li><a href="/CreationClient">Créer un nouveau client</a></li>
+							<!-- 				<li><a href="#">Modifier un client existant</a></li> -->
+						</ul>
+					</li>
+					<li>Gérer Les comptes
+						<ul>
+							<li><a href="/listeComptes">la liste des comptes</a></li>
+							<li><a href="/EffectuerDepot">Effectuer un dépot</a></li>
+							<li>Créer un compte
+								<ul>
+									<li><a href="/CreationCompte">pour un client déja
+											existant</a></li>
+									<li><a href="#">pour un nouveau client(Pas encore
+											faite)</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>Gérer Les demandes
+						<ul>
+							<li><a href="/listeDemandes">Consulter les demandes</a></li>
+							<li><a href="/chercherDemande">Avancer l'etat d'une
+									demande</a></li>
+						</ul>
+					</li>
+					<li>Gérer Les crédits
+						<ul>
+							<li><a href="/listeCredits">Consulter les crédits</a></li>
+							<li><a href="/PayerTraite">Payer une Traite</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div th:replace="fragments/NavBar :: footer"></div>
+		</div>
+	</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+	crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>
+</html>

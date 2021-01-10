@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Demande Details</title>
+<link href="client/css/styles.css" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+</head>
+<body>
+
+	<div th:insert="client/fragments/NavBar :: div.navigateur"></div>
+
+
+
+	<div id="layoutSidenav">
+		<div th:replace="client/fragments/NavBar :: div.HEllo"></div>
+		<div id="layoutSidenav_content">
+			<main>
+			<div class="container-fluid">
+				<h1 class="mt-4">
+					Historique de la Demande : <span th:text="${ demande.id_demande }"></span>
+				</h1>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item"><a href="/">Acceuil</a></li>
+					<li class="breadcrumb-item active"><a
+						th:href="@{/MesDemandes}">Mes Demandes</a></li>
+					<li class="breadcrumb-item active"><a
+						th:href="@{/DemandeDetails(idDemande=${demande.id_demande})}">Demande
+							Numéro <span th:text="${ demande.id_demande }"></span>-Details
+					</a></li>
+<!-- 					<li class="breadcrumb-item active">Détails</li> -->
+				</ol>
+
+
+				<div class="row">
+					<div class="col-md-2 col-lg-2"></div>
+					<div class="col-md-8 col-lg-8">
+						<div class="Demande-table" th:if="${ demande.id_demande != 0  }">
+
+							<div class="card mb-4 shadow bg-white rounded">
+								<div class="card-body">
+
+									<!------------------ start Demande table  ----------------------->
+
+									<div>
+										<strong> <u>La Demande</u> :
+										</strong>
+									</div>
+									<div class="table-responsive">
+										<table class="table table-bordered table-hover" width="100%">
+											<thead>
+												<tr class="bg-success">
+													<th>N° Demande</th>
+													<th>Date Demande</th>
+													<th>Montant Demande</th>
+													<th>Etat demande</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:class="${ demande.etatDemande == '10' } ? table-success " th:classappend="${ demande.etatDemande == '-1' } ? table-danger ">
+													<td th:text="${ demande.id_demande }">1</td>
+													<td th:text="${ demande.dateDemande }">2018 aout 09</td>
+													<td th:text="${ demande.montantDemande }">1200</td>
+													<td th:switch="${demande.etatDemande}"><span
+														th:case="'1'">Etape 1 : Demande en ligne toujours</span><span
+														th:case="'2'">Etape 2 : Convoquer pour un entretien</span><span
+														th:case="'3'">Etape 3 : en cours d'étude</span> <span
+														th:case="'10'">Etape 4 : demande accepté</span> <span
+														th:case="'-1'">Etape 4 : demande refusé</span></td>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+
+									<!--------------------- End Demande table -------------------------->
+									<div style="height: 10vh;"></div>
+									<!------------------ start history table  ----------------------->
+									<div class="lesOperations-depot"
+										th:if="*{#lists.size(demande.lesAvances)}">
+										<div>
+											<strong> <u>Détails</u> :
+											</strong>
+										</div>
+										<div class="table-responsive">
+											<table class="table table-bordered table-hover" width="100%">
+												<thead>
+													<tr class="bg-success">
+														<th>Date d'avancement</th>
+														<th>Etat d'avant</th>
+														<th>Etat d'aprés</th>
+														<th>Commentaire</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="avance : ${#lists.sort(demande.lesAvances)}">
+														<td th:text="${avance.dateAvancement}">Avatar</td>
+														<td th:switch="${avance.etatAvant}"><span
+															th:case="'1'">Etape 1 : Demande en ligne toujours</span>
+															<span th:case="'2'">Etape 2 : Convoquer pour un
+																entretien</span> <span th:case="'3'">Etape 3 : en cours
+																d'étude</span> <span th:case="'10'">Etape 4 : demande
+																accepté</span> <span th:case="'-1'">Etape 4 : demande
+																refusé</span></td>
+														<td th:switch="${avance.etatApres}"><span
+															th:case="'1'">Etape 1 : Demande en ligne toujours</span>
+															<span th:case="'2'">Etape 2 : Convoquer pour un
+																entretien</span> <span th:case="'3'">Etape 3 : en cours
+																d'étude</span> <span th:case="'10'">Etape 4 : demande
+																accepté</span> <span th:case="'-1'">Etape 4 : demande
+																refusé</span></td>
+														<td th:text="${avance.commentaire}">7.8</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<!--------------------- End history table -------------------------->
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+
+
+					<div class="col-md-2 col-lg-2">
+						<!---------------------Start client informations ---------------------------->
+
+						<!---------------------------End client informations ---------------------------->
+					</div>
+				</div>
+
+				<div style="height: 50vh;"></div>
+			</div>
+			</main>
+			<div th:replace="client/fragments/NavBar :: footer"></div>
+		</div>
+	</div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+
+</html>

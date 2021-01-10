@@ -1,0 +1,160 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Liste des demandes</title>
+<link href="css/styles.css" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+</head>
+<body>
+
+	<div th:insert="fragments/NavBar :: div.navigateur"></div>
+
+
+
+	<div id="layoutSidenav">
+		<div th:replace="fragments/NavBar :: div.HEllo"></div>
+		<div id="layoutSidenav_content">
+			<main>
+			<div class="container-fluid">
+				<h1 class="mt-4">Acceuil</h1>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item"><a th:href="@{/}">Acceuil</a></li>
+					<li class="breadcrumb-item">Gestion Demande</li>
+					<li class="breadcrumb-item"><a th:href="@{/listeDemandes}">liste
+							des Demandes</a></li>
+				</ol>
+				<table class="table table-bordered table-hover shadow bg-white rounded">
+					<thead class="thead-dark">
+						<tr>
+							<th>Numéro de Demande</th>
+							<th>Numéro du Client</th>
+							<th>Nom complet du Client</th>
+							<th>Date de la demande</th>
+							<th>Montant demandé</th>
+							<th>Etat de la demande</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="demande : ${demandes}" th:class="${ demande.etatDemande == '10' } ? bg-success " th:classappend="${ demande.etatDemande == '-1' } ? table-danger ">
+							<td th:text="${demande.id_demande}">Avatar</td>
+							<td th:text="${demande.client.idClient}">Avatar</td>
+							<td th:text="${demande.client.nom}">7.8</td>
+							<td th:text="${ demande.dateDemande }">Peter recommended</td>
+							<td th:text="${ demande.montantDemande }" /></td>
+							<td th:switch="${demande.etatDemande}"><span th:case="'1'">Etape
+									1 : Demande en ligne toujours</span> <span th:case="'2'">Etape
+									2 : Convoquer pour un entretien</span> <span th:case="'3'">Etape
+									3 : en cours d'étude</span> <span th:case="'10'">Etape 4 :
+									demande accepté</span> <span th:case="'-1'">Etape 4 : demande
+									refusé</span></td>
+							<td><a class="badge badge-secondary"
+								th:href="@{/chercherDemande(idDemande=${demande.id_demande})}">Détails</a></td>
+					</tbody>
+				</table>
+				<div style="height: 50vh;"></div>
+				<div class="card mb-4">
+					<div class="card-body">When scrolling, the navigation stays
+						at the top of the page. This is the end of the static navigation
+						demo.</div>
+				</div>
+			</div>
+			<main>
+			<div th:replace="fragments/NavBar :: footer"></div>
+		</div>
+	</div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html> -->
+<!-- <html xmlns:th="http://www.thymeleaf.org" > -->
+<!-- <head> -->
+<!-- <meta charset="utf-8"> -->
+<!-- <link rel="stylesheet" type="text/css" media="all" href="in/style1.css" -->
+<!-- 	th:href="@{inc/style1.css}" /> -->
+<!-- <!-- <link href="css/styles.css" rel="stylesheet" /> -->
+-->
+<!-- <title>La Liste des Demandes</title> -->
+<!-- </head> -->
+<!-- <body> -->
+
+
+<!-- 		<h1>La liste des demandes des credits</h1> -->
+<!-- 		<h4>L'Etape 1 : Demande en ligne</h4> -->
+<!-- 		<h4>L'Etape 2 : Convocation pour entretien</h4> -->
+<!-- 		<h4>L'Etape 3 : Etude du dossier</h4> -->
+<!-- 		<h4>L'Etape 4 : réponse définitive (Acceptation ou refus)</h4> -->
+
+<!-- 		<table> -->
+<!-- 			<thead> -->
+<!-- 				<tr> -->
+<!-- 					<th>Numéro de Demande</th> -->
+<!-- 					<th>Numéro du Client</th> -->
+<!-- 					<th>Nom complet du Client</th> -->
+<!-- 					<th>Date de la demande</th> -->
+<!-- 					<th>Montant demandé</th> -->
+<!-- 					<th>Etat de la demande</th> -->
+<!-- 				</tr> -->
+<!-- 			</thead> -->
+<!-- 			<tbody> -->
+<!-- 				<tr th:each="demande : ${demandes}"> -->
+<!-- 					<td th:text="${demande.id_demande}">Avatar</td> -->
+<!-- 					<td th:text="${demande.client.idClient}">Avatar</td> -->
+<!-- 					<td th:text="${demande.client.nom}">7.8</td> -->
+<!-- 					<td th:text="${ demande.dateDemande }">Peter recommended</td> -->
+<!-- 					<td th:text="${ demande.montantDemande }" /></td> -->
+<!-- 					<td th:switch="${demande.etatDemande}"><span th:case="'1'">Etape -->
+<!-- 							1 : Demande en ligne toujours</span> <span th:case="'2'">Etape 2 -->
+<!-- 							: Convoquer pour un entretien</span> <span th:case="'3'">Etape 3 -->
+<!-- 							: en cours d'étude</span> <span th:case="'10'">Etape 4 : demande -->
+<!-- 							accepté</span> <span th:case="'-1'">Etape 4 : demande refusé</span></td> -->
+<!-- 					<td><a href="#" class="btn btn-info" th:href="@{/hitoriqueDemande(idDemande=${demande.id_demande})}" role="button">Historique</a></td> -->
+<!-- 				</tr> -->
+<!-- 			</tbody> -->
+<!-- 		</table> -->
+
+
+<!-- </body> -->
+<!-- </html> -->

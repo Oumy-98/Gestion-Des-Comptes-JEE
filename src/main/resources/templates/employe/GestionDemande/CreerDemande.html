@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Creation d'une Demande</title>
+<link href="css/styles.css" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+</head>
+<body>
+
+	<div th:insert="fragments/NavBar :: div.navigateur"></div>
+
+
+
+	<div id="layoutSidenav">
+		<div th:replace="fragments/NavBar :: div.HEllo"></div>
+		<div id="layoutSidenav_content">
+			<main>
+			<div class="container-fluid">
+				<h1 class="mt-4">Creation d'une Demande</h1>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item"><a href="index.html">Gestion
+							Client</a></li>
+					<li class="breadcrumb-item active"><a
+						th:href="@{/creerDemande}"></a> Création Demande</li>
+				</ol>
+				
+				
+				<!----------------------------------- ROW 3 : Start of the Message -------------------------------->
+				<div class="row"
+					th:if="${ #request.getParameter('success') == '0' or #request.getParameter('success') == '1'}">
+					<!-- 				  -->
+					<div class="col-md-2"></div>
+					<div class="col-md-8">
+						<div class="alert alert-dismissible fade show"
+							th:classappend="${ #request.getParameter('success') == '0' } ? alert-danger : alert-success"
+							role="alert">
+							<strong th:text="${#request.getParameter('msg')}"></Strong> <span
+								th:text="${#request.getParameter('error')}"></span>
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					</div>
+					<div class="col-md-2"></div>
+				</div>
+				<!----------------------------------- ROW 3: End of of the Message ------------------------------->
+				<div style="height: 2vh;"></div>
+
+				<!----------------------------------- ROW 2 : Start of the add -------------------------------->
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-10">
+						<div class="card mb-4 shadow bg-white rounded">
+							<div class="card-body">
+
+								<form method="POST" th:action="@{/CreerDemandeV}"
+									th:object="${demande}">
+
+									<div class="form-group row">
+										<label class="col-sm-2 col-form-label">Numéro du
+											Client :</label>
+										<div class="col-sm-10">
+											<input type="number" class="form-control"
+												th:field="*{client.idClient}"> <small
+												class="text-danger"
+												th:text="${#httpServletRequest.getParameter('error')}"></small>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-2 col-form-label">Montant demandé
+											:</label>
+										<div class="col-sm-10">
+											<input type="number" class="form-control"
+												th:field="*{montantDemande}"> <small
+												th:if="${#fields.hasErrors('montantDemande')}"
+												th:errors="*{montantDemande}"> Message </small>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-sm-2 col-form-label">Commentaire :</label>
+										<div class="col-sm-10">
+											<textarea class="form-control" th:field="*{commentaire}"
+												rows="3"></textarea>
+											<span class="erreur" th:errors="*{commentaire}"></span>
+										</div>
+									</div>
+									<!-- 									<input th:field="*{idDemande}" type="hidden" /> -->
+
+									<button type="button"
+										class="btn btn-secondary btn-lg btn-block" data-toggle="modal"
+										data-target="#exampleModalCenter">Valider</button>
+
+
+									<!------------------------------------------ Start Modal ----------------------------------------------->
+
+									<div class="modal fade" id="exampleModalCenter" tabindex="-1"
+										role="dialog" aria-labelledby="exampleModalCenterTitle"
+										aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered"
+											role="document">
+											<div class="modal-content">
+												<div class="modal-header text-center">
+													<h5 class="modal-title" id="exampleModalLongTitle">Message
+														Confirmation</h5>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">Vous etes au point de créer
+													une demande, c'est un acte irréversible et vous ne pouvez
+													pas revenir en arriére une fois effectuer. Etes-vous d'y
+													aller d'avant.</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-dismiss="modal">Annuler</button>
+													<button type="submit" class="btn btn-primary">Valider</button>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<!------------------------------------------ End Modal ----------------------------------------------->
+
+
+
+
+								</form>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-md-1"></div>
+				</div>
+				<!----------------------------------- ROW 2 : End of the add ------------------------------------->
+
+
+
+
+
+
+
+
+
+
+				<div style="height: 100vh;"></div>
+				<div class="card mb-4">
+					<div class="card-body">When scrolling, the navigation stays
+						at the top of the page. This is the end of the static navigation
+						demo.</div>
+				</div>
+			</div>
+			</main>
+
+
+			<div th:replace="fragments/NavBar :: footer"></div>
+		</div>
+	</div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+</html>

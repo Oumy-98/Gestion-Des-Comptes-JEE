@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<!--  favicon -->
+<link rel="shortcut icon" href="logo.png">
+<title>Static Navigation - SB Admin</title>
+<link href="css/styles.css" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+</head>
+<body>
+
+	<div class="navigateur">
+		<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+			<a class="navbar-brand" th:href="@{/index}">Banque ENSAH</a>
+			<button class="btn btn-link btn-sm order-1 order-lg-0"
+				id="sidebarToggle" href="#">
+				<i class="fas fa-bars"></i>
+			</button>
+			<!-- Navbar Search-->
+			<div
+				class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+
+			</div>
+		
+
+			<div th:if="${ session.nbrNotifNonVu != 0 }">
+				<div class="blink_me">
+					<strong class="navbar-text font-italic text-danger"> vous
+						avez <span th:text="${session.nbrNotifNonVu}"> </span> nouvelle
+						notification
+					</strong>
+				</div>
+			</div>
+
+
+			<!-- Navbar-->
+			<ul class="navbar-nav ml-auto ml-md-0">
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" id="userDropdown" href="#"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+					<div class="dropdown-menu dropdown-menu-right"
+						aria-labelledby="userDropdown">
+						<a class="dropdown-item" th:href="@{/Profil}">Mon Profil</a> <a
+							class="dropdown-item" th:href="@{/Notifications}">Mes
+							notifications <strong th:if="${ session.nbrNotifNonVu != 0 }"
+							class="navbar-text text-danger">(<span
+								th:text="${session.nbrNotifNonVu }"> </span>)
+						</strong>
+
+						</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" th:href="@{/logout}">Logout</a>
+					</div></li>
+			</ul>
+		</nav>
+	</div>
+
+
+
+
+
+
+
+
+
+
+	<div id="layoutSidenav">
+		<div id="layoutSidenav_nav" class="HEllo">
+			<nav class="sb-sidenav accordion sb-sidenav-dark"
+				id="sidenavAccordion">
+				<div class="sb-sidenav-menu">
+					<div class="nav">
+						<div class="sb-sidenav-menu-heading">Core</div>
+						<a class="nav-link" href="/">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-tachometer-alt"></i>
+							</div> <strong> Acceuil</strong>
+						</a> <a class="nav-link" th:href="@{/Profil}">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-tachometer-alt"></i>
+							</div> <strong> Mon Profil</strong>
+						</a> </a> <a class="nav-link" th:href="@{/Profil}">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-tachometer-alt"></i>
+							</div> <strong> Mes Notifications</strong>
+						</a>
+
+
+						<div class="sb-sidenav-menu-heading">Menu</div>
+
+
+						<a class="nav-link collapsed" href="#" data-toggle="collapse"
+							data-target="#collapseClient" aria-expanded="false"
+							aria-controls="collapseClient"><div class="sb-nav-link-icon">
+								<i class="fas fa-book-open"></i>
+							</div> <strong>Gestion Client</strong>
+							<div class="sb-sidenav-collapse-arrow">
+								<i class="fas fa-angle-down"></i>
+							</div> </a>
+						<div class="collapse" id="collapseClient"
+							aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav">
+
+								<a class="nav-link" href="/ChercherClient">Consulter un
+									Client</a> <a class="nav-link" href="/CreationClient">Créer un
+									nouveau client</a> <a class="nav-link" href="/listeClients">Les
+									clients</a>
+							</nav>
+						</div>
+
+
+
+						<a class="nav-link collapsed" href="#" data-toggle="collapse"
+							data-target="#collapsePages" aria-expanded="false"
+							aria-controls="collapsePages"><div class="sb-nav-link-icon">
+								<i class="fas fa-book-open"></i>
+							</div> <strong>Gestion Compte</strong>
+							<div class="sb-sidenav-collapse-arrow">
+								<i class="fas fa-angle-down"></i>
+							</div> </a>
+
+
+						<div class="collapse" id="collapsePages"
+							aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav">
+								<a class="nav-link" href="/ChercherCompte">Consulter un
+									Compte</a> <a class="nav-link" href="/UnDepot">Effectuer un
+									dépot</a> <a class="nav-link" href="/listeComptes">les comptes</a>
+							</nav>
+						</div>
+
+
+						<div class="collapse" id="collapsePages"
+							aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav accordion"
+								id="sidenavAccordionPages">
+								<a class="nav-link collapsed" href="#" data-toggle="collapse"
+									data-target="#pagesCollapseAuth" aria-expanded="false"
+									aria-controls="pagesCollapseAuth">Créer un compte
+									<div class="sb-sidenav-collapse-arrow">
+										<i class="fas fa-angle-down"></i>
+									</div>
+								</a>
+								<div class="collapse" id="pagesCollapseAuth"
+									aria-labelledby="headingOne"
+									data-parent="#sidenavAccordionPages">
+									<nav class="sb-sidenav-menu-nested nav">
+										<a class="nav-link" th:href="@{/CreationCompte}">Ancien
+											Client</a> <a class="nav-link" href="#">Nouveau Client</a>
+									</nav>
+								</div>
+							</nav>
+						</div>
+
+
+						<a class="nav-link collapsed" href="#" data-toggle="collapse"
+							data-target="#collapseDemandes" aria-expanded="false"
+							aria-controls="collapseDemandes">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-book-open"></i>
+							</div> <strong>Gérer Les demandes</strong>
+							<div class="sb-sidenav-collapse-arrow">
+								<i class="fas fa-angle-down"></i>
+							</div>
+						</a>
+
+
+						<div class="collapse" id="collapseDemandes"
+							aria-labelledby="headingThree" data-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav">
+								<a class="nav-link" href="/chercherDemande">Consulter une
+									Demande</a> <a class="nav-link" href="/avancerEtat">Avancer
+									l'état d'une demande</a> <a class="nav-link" href="/creerDemande">Créer
+									une Demande</a> <a class="nav-link" href="/listeDemandes">les
+									demandes</a>
+							</nav>
+						</div>
+
+
+						<a class="nav-link collapsed" href="#" data-toggle="collapse"
+							data-target="#collapseCredit" aria-expanded="false"
+							aria-controls="collapseCredit">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-book-open"></i>
+							</div> <strong>Gérer Les crédits</strong>
+							<div class="sb-sidenav-collapse-arrow">
+								<i class="fas fa-angle-down"></i>
+							</div>
+						</a>
+
+
+						<div class="collapse" id="collapseCredit"
+							data-parent="#sidenavAccordion" aria-labelledby="headingFour">
+							<nav class="sb-sidenav-menu-nested nav">
+								<a class="nav-link" href="/ChercherCredit">Consulter un
+									Credit</a> <a class="nav-link" href="/PayerTraite">Payer une
+									Traite</a> <a class="nav-link" href="/listeCredits">les crédits</a>
+							</nav>
+						</div>
+
+					</div>
+				</div>
+				<div class="sb-sidenav-footer">
+					<div class="small">Logged in as:</div>
+
+					<span
+						th:text="${ #strings.toUpperCase(session.sessionUserInfos.nom) + ' ' + #strings.toUpperCase(session.sessionUserInfos.prenom) }"></span>
+				</div>
+			</nav>
+		</div>
+
+
+
+
+
+		<div id="layoutSidenav_content">
+			<div class="TheMain">
+				<main> </main>
+
+
+				<footer th:fragment="footer" class="py-4 bg-light mt-auto">
+					<div class="container-fluid">
+						<div
+							class="d-flex align-items-center justify-content-between small">
+							<div class="text-muted">Copyright &copy; ENSAH : Mohcine
+								Rouessi</div>
+							<div>
+								<a href="#">Privacy Policy</a> &middot; <a href="#">Terms
+									&amp; Conditions</a>
+							</div>
+						</div>
+					</div>
+				</footer>
+
+			</div>
+		</div>
+	</div>
+
+
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+	<script src="js/scripts.js"></script>
+
+</body>
+
+</html>

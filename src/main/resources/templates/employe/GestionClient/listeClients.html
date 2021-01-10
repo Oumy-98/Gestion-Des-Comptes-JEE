@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Liste des Comptes</title>
+<link href="css/styles.css" rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
+</head>
+<body>
+
+	<div th:insert="fragments/NavBar :: div.navigateur"></div>
+
+
+
+	<div id="layoutSidenav">
+		<div th:replace="fragments/NavBar :: div.HEllo"></div>
+		<div id="layoutSidenav_content">
+			<main>
+			<div class="container-fluid">
+				<h1 class="mt-4">Liste des Clients de la banque</h1>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item active"><a
+						th:href="@{/}">Acceuil</a></li>
+					<li class="breadcrumb-item">Gestion Client</li>
+					<li class="breadcrumb-item active"><a
+						th:href="@{/listeClients}"> liste des Clients</a></li>
+				</ol>
+
+
+				<!-- <h1>Liste Clients</h1> -->
+				<div class="card mb-4 shadow bg-white rounded">
+					<div class="card-header">
+						Total des clients : <span th:text="*{#lists.size(clients)}"></span>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover" id="dataTable" width="100%"
+								cellspacing="0">
+								<thead class="thead-dark">
+									<!-- 								class="thead-light" -->
+									<tr>
+										<th scope="col">N°: Client</th>
+										<th scope="col">Nom</th>
+										<th scope="col">Prénom</th>
+<!-- 										<th scope="col">Date de naissance</th> -->
+										<th scope="col">Téléphone</th>
+										<th scope="col">Email</th>
+										<th scope="col">les comptes</th>
+										<th scope="col">les demandes</th>
+										<th scope="col">les credits</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="client : ${clients}">
+										<td scope="row" th:text="${ client.idClient }">Avatar</td>
+										<td th:text="${ client.nom }">7.8</td>
+										<td th:text="${ client.prenom }">LOW</td>
+<!-- 										<td th:text="${ client.dateNaissance }">Peter recommended</td> -->
+										<td th:text="${ client.telephone }" /></td>
+										<td th:text="${ client.email }" /></td>
+										<td th:text="${#lists.size(client.lesComptesBancaire) }" /></td>
+										<td th:text="${#lists.size(client.lesDemndes) }" /></td>
+										<td th:text="${#lists.size(client.lesCredit) }" /></td>
+										<td><a class="badge badge-secondary"
+											th:href="@{/ChercherClient(idClient=${client.idClient})}">Détails</a></td>
+										<!-- 										<td><a href="#" class="btn btn-info" role="button" -->
+										<!-- 											th:href="@{/CreationClient(idClient=${client.idClient})}"><i -->
+										<!-- 												class="fas fa-edit"></i></a></td> -->
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<div style="height: 50vh;"></div>
+				<div class="card mb-4">
+					<div class="card-body">When scrolling, the navigation stays
+						at the top of the page. This is the end of the static navigation
+						demo.</div>
+				</div>
+			</div>
+			</main>
+			<div th:replace="fragments/NavBar :: footer"></div>
+		</div>
+	</div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>
+</html>
